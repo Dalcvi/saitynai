@@ -53,4 +53,4 @@ duomenų manipuliavimui su duomenų baze) yra reikalingas Gaming Forum API, kuri
 per aplikacijų programavimo sąsają. Pats Gaming Forum API vykdo duomenų mainus su duomenų
 baze - tam naudojama ORM sąsaja. 
 
-<img src="./markdown/UML.png" />
+<img src="./markdown/UML_DIAGRAM.png" />
