@@ -44,7 +44,7 @@ Administratorius galės:
 
 Sistemos sudedamosios dalys:
 * Kliento pusė (ang. Front-End) – naudojant React.js;
-* Serverio pusė (angl. Back-End) – naudojant ASP.NET Core. Duomenų bazė – MySQL.
+* Serverio pusė (angl. Back-End) – naudojant <span>ASP.NET</span> Core. Duomenų bazė – MySQL.
 
 Žemiau pavaizduota kuriamos sistemos diegimo diagrama. Sistemos talpinimui yra
 naudojamas Azure serveris. Kiekviena sistemos dalis yra diegiama tame pačiame serveryje.
