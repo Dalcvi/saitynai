@@ -1,9 +1,11 @@
-﻿using ForumApi.Data.Entities;
+﻿using ForumApi.Auth.Model;
+using ForumApi.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ForumApi.Data.Context
 {
-    public class ForumDbContext : DbContext
+    public class ForumDbContext : IdentityDbContext<ForumRestUser>
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -11,7 +13,11 @@ namespace ForumApi.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=ForumDb;TrustServerCertificate=True;");
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DatabaseConnectionString"]);
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿using ForumApi.Data.Dtos.General;
+﻿using ForumApi.Auth.Model;
+using ForumApi.Data.Dtos.General;
 using ForumApi.Data.Dtos.Posts;
 using ForumApi.Data.Entities;
 using ForumApi.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
+using System.Security.Claims;
 
 namespace ForumApi.Controllers
 {
@@ -12,16 +16,18 @@ namespace ForumApi.Controllers
     {
         private readonly IPostsRepository postsRepository;
         private readonly ICategoriesRepository categoriesRepository;
+        private readonly IAuthorizationService authorizationService;
         private const string getPostRoute = "GetPost";
 
-
-        public PostsController(IPostsRepository postsRepository, ICategoriesRepository categoriesRepository)
+        public PostsController(IPostsRepository postsRepository, ICategoriesRepository categoriesRepository, IAuthorizationService authorizationService)
         {
             this.postsRepository = postsRepository;
             this.categoriesRepository = categoriesRepository;
+            this.authorizationService = authorizationService;
         }
 
         // GET: /api/categories/{categoryId}/posts?pageNumber=1&pageSize=10
+        [AllowAnonymous]
         [HttpGet]
         public async Task<PagedItems<IEnumerable<PostDto>>> GetManyPaging(int categoryId, [FromQuery] SearchParameters searchParams)
         {
@@ -33,6 +39,7 @@ namespace ForumApi.Controllers
 
         // GET: /api/categories/{categoryId}/posts/{postId}
         [HttpGet]
+        [AllowAnonymous]
         [Route("{postId}", Name = getPostRoute)]
         public async Task<ActionResult<PostDto>> GetOne(int categoryId, int postId)
         {
@@ -45,13 +52,14 @@ namespace ForumApi.Controllers
 
         // POST: /api/categories/{categoryId}/posts
         [HttpPost]
+        [Authorize(Roles = Roles.User)]
         public async Task<ActionResult<PostDto>> Create(int categoryId, CreatePostDto createPostDto)
         {
             var category = await categoriesRepository.GetOneAsync(categoryId);
             if (category == null)
                 return NotFound();
 
-            var post = new Post { Category = category, Title = createPostDto.Title, Content = createPostDto.Content };
+            var post = new Post { Category = category, Title = createPostDto.Title, Content = createPostDto.Content, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
 
             await postsRepository.CreateAsync(post);
 
@@ -60,6 +68,7 @@ namespace ForumApi.Controllers
 
         // PUT: /api/categories/{categoryId}/posts/{postId}
         [HttpPut]
+        [Authorize(Roles = Roles.User)]
         [Route("{postId}")]
         public async Task<ActionResult<PostDto>> Update(int categoryId, int postId, UpdatePostDto updatePostDto)
         {
@@ -67,7 +76,15 @@ namespace ForumApi.Controllers
             if (post == null)
                 return NotFound();
 
+
+            var authResult = await authorizationService.AuthorizeAsync(User, post, Policies.ContentOwner);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+
             post.Content = updatePostDto.Content;
+            post.Title = updatePostDto.Title;
 
             await postsRepository.UpdateAsync(post);
 
@@ -77,6 +94,7 @@ namespace ForumApi.Controllers
 
         // DELETE: /api/categories/{categoryId}/posts/{postId}
         [HttpDelete]
+        [Authorize(Roles = Roles.User)]
         [Route("{postId}")]
         public async Task<ActionResult> Delete(int categoryId, int postId)
         {
@@ -84,6 +102,11 @@ namespace ForumApi.Controllers
             if (post == null)
                 return NotFound();
 
+            var authResult = await authorizationService.AuthorizeAsync(User, post, Policies.ContentOwner);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
             await postsRepository.DeleteAsync(post);
 
             return NoContent();

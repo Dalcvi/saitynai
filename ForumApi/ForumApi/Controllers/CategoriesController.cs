@@ -1,8 +1,10 @@
-﻿using ForumApi.Data.Dtos.Categories;
+﻿using ForumApi.Auth.Model;
+using ForumApi.Data.Dtos.Categories;
 using ForumApi.Data.Dtos.Comments;
 using ForumApi.Data.Dtos.General;
 using ForumApi.Data.Entities;
 using ForumApi.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForumApi.Controllers
@@ -22,6 +24,7 @@ namespace ForumApi.Controllers
         }
 
         // GET: /api/categories?pageNumber=1&pageSize=10
+        [AllowAnonymous]
         [HttpGet]
         public async Task<PagedItems<IEnumerable<CategoryDto>>> GetManyPaging([FromQuery] SearchParameters searchParams)
         {
@@ -32,6 +35,7 @@ namespace ForumApi.Controllers
         }
 
         // GET: /api/categories/{categoryId}
+        [AllowAnonymous]
         [HttpGet]
         [Route("{categoryId}", Name = getCategoryRoute)]
         public async Task<ActionResult<CategoryDto>> GetOne(int categoryId)
@@ -44,6 +48,7 @@ namespace ForumApi.Controllers
         }
 
         // POST: /api/categories
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
         public async Task<ActionResult<CategoryDto>> Create(CreateCategoryDto createCategoryDto)
         {
@@ -56,6 +61,7 @@ namespace ForumApi.Controllers
 
         // PUT: /api/categories/{categoryId}
         [HttpPut]
+        [Authorize(Roles = Roles.Admin)]
         [Route("{categoryId}")]
         public async Task<ActionResult<CategoryDto>> Update(int categoryId, UpdateCategoryDto updateCategoryDto)
         {
@@ -73,6 +79,7 @@ namespace ForumApi.Controllers
 
         // DELETE: /api/categories/{categoryId}
         [HttpDelete]
+        [Authorize(Roles = Roles.Admin)]
         [Route("{categoryId}")]
         public async Task<ActionResult> Delete(int categoryId)
         {
@@ -88,6 +95,7 @@ namespace ForumApi.Controllers
         // GET: /api/categories/{categoryId}/comments?pageNumber=1&pageSize=10
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("{categoryId}/comments")]
         public async Task<ActionResult<PagedItems<IEnumerable<CommentDto>>>> GetComments(int categoryId, [FromQuery] SearchParameters searchParams)
         {

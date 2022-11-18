@@ -1,8 +1,12 @@
-﻿using ForumApi.Data.Dtos.Comments;
+﻿using ForumApi.Auth.Model;
+using ForumApi.Data.Dtos.Comments;
 using ForumApi.Data.Dtos.General;
 using ForumApi.Data.Entities;
 using ForumApi.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
+using System.Security.Claims;
 
 namespace ForumApi.Controllers
 {
@@ -12,13 +16,15 @@ namespace ForumApi.Controllers
     {
         private readonly IPostsRepository postsRepository;
         private readonly ICommentsRepository commentsRepository;
+        private readonly IAuthorizationService authorizationService;
 
         private const string getCommentRoute = "GetComment";
 
-        public CommentsController(ICommentsRepository commentsRepository, IPostsRepository postsRepository)
+        public CommentsController(ICommentsRepository commentsRepository, IPostsRepository postsRepository, IAuthorizationService authorizationService)
         {
             this.commentsRepository = commentsRepository;
             this.postsRepository = postsRepository;
+            this.authorizationService = authorizationService;
         }
 
         // GET: /api/categories/{categoryId}/posts/{postId}/comments?pageNumber=1&pageSize=10
@@ -45,6 +51,7 @@ namespace ForumApi.Controllers
 
         // POST: /api/categories/{categoryId}/posts/{postId}/comments
         [HttpPost]
+        [Authorize(Roles = Roles.User)]
         public async Task<ActionResult<CommentDto>> Create(int categoryId, int postId, CreateCommentDto createCommentDto)
         {
             var post = await postsRepository.GetOneAsync(categoryId, postId);
@@ -52,10 +59,7 @@ namespace ForumApi.Controllers
                 return NotFound();
 
 
-            var comment = new Comment { Post = post, Content = createCommentDto.Content };
-            Console.WriteLine("---");
-            Console.WriteLine(post.CategoryId);
-            Console.WriteLine("---");
+            var comment = new Comment { Post = post, Content = createCommentDto.Content, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
 
             await commentsRepository.CreateAsync(comment);
             return CreatedAtRoute(getCommentRoute, new { categoryId = post.CategoryId, postId = post.Id, commentId = comment.Id }, comment.MapToDto());
@@ -63,12 +67,19 @@ namespace ForumApi.Controllers
 
         // PUT: /api/categories/{categoryId}/posts/{postId}/comments/{commentId}
         [HttpPut]
+        [Authorize(Roles = Roles.User)]
         [Route("{commentId}")]
         public async Task<ActionResult<CommentDto>> Update(int categoryId, int postId, int commentId, UpdateCommentDto updateCommentDto)
         {
             var comment = await commentsRepository.GetOneAsync(categoryId, postId, commentId);
             if (comment == null)
                 return NotFound();
+
+            var authResult = await authorizationService.AuthorizeAsync(User, comment, Policies.ContentOwner);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             comment.Content = updateCommentDto.Content;
 
@@ -80,12 +91,19 @@ namespace ForumApi.Controllers
 
         // DELETE: /api/categories/{categoryId}/posts/{postId}/comments/{commentId}
         [HttpDelete]
+        [Authorize(Roles = Roles.User)]
         [Route("{commentId}")]
         public async Task<ActionResult> Delete(int categoryId, int postId, int commentId)
         {
             var comment = await commentsRepository.GetOneAsync(categoryId, postId, commentId);
             if (comment == null)
                 return NotFound();
+
+            var authResult = await authorizationService.AuthorizeAsync(User, comment, Policies.ContentOwner);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             await commentsRepository.DeleteAsync(comment);
 

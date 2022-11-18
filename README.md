@@ -1,5 +1,7 @@
 # Gaming Forum
+
 ## 1. Sprendžiamo uždavinio aprašymas
+
 ### 1.1 Sistemos paskirtis
 
 Projekto tikslas - sukurti vietą, kur žmonės galėtų diskutuoti apie žaidimus.
@@ -12,6 +14,7 @@ Svečias atėjęs į svetainę galės naršyti per svetainę ir matyti kitų var
 ### 1.2 Funkciniai reikalavimai
 
 Svečias galės:
+
 1. Peržiūrėti kategorijų sąrašą.
 2. Peržiūrėti įrašų pavadinimų sąrašą.
 3. Peržiūrėti specifinį įrašą.
@@ -43,14 +46,22 @@ Administratorius galės:
 ## 2. Sistemos architektūra
 
 Sistemos sudedamosios dalys:
-* Kliento pusė (ang. Front-End) – naudojant React.js;
-* Serverio pusė (angl. Back-End) – naudojant <span>ASP.NET</span> Core. Duomenų bazė – MySQL.
+
+- Kliento pusė (ang. Front-End) – naudojant React.js;
+- Serverio pusė (angl. Back-End) – naudojant <span>ASP.NET</span> Core. Duomenų bazė – MySQL.
 
 Žemiau pavaizduota kuriamos sistemos diegimo diagrama. Sistemos talpinimui yra
 naudojamas Azure serveris. Kiekviena sistemos dalis yra diegiama tame pačiame serveryje.
 Internetinė aplikacija yra pasiekiama per HTTP protokolą. Šios sistemos veikimui (pvz.,
 duomenų manipuliavimui su duomenų baze) yra reikalingas Gaming Forum API, kuris pasiekiamas
 per aplikacijų programavimo sąsają. Pats Gaming Forum API vykdo duomenų mainus su duomenų
-baze - tam naudojama ORM sąsaja. 
+baze - tam naudojama ORM sąsaja.
 
 <img src="./markdown/UML_DIAGRAM.png" />
+
+## 3. Svetaine
+
+### 3.1 Api
+
+Svetaines API pasiekiamas is:
+<a href="https://forumgaming.azurewebsites.net/index.html">SWAGGER</a>

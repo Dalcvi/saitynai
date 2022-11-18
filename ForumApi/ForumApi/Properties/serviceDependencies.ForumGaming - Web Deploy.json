@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/ForumApi/apis/ForumApi",
+      "type": "apis.azure"
+    },
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/forumapidbserver/databases/ForumApi_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:DatabaseConnectionString"
+    }
+  }
+}

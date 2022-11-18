@@ -1,0 +1,888 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Forum API",
+    "description": "API for forum application"
+  },
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/RegisterUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/LoginUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "PageNumber",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "PageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CategoryDtoIEnumerablePagedItems"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateCategoryDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CategoryDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/categories/{categoryId}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "GetCategory",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CategoryDto"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateCategoryDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CategoryDto"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/categories/{categoryId}/comments": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "PageNumber",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "PageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CommentDtoIEnumerablePagedItems"
+            }
+          }
+        }
+      }
+    },
+    "/api/categories/{categoryId}/posts/{postId}/comments": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "PageNumber",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "PageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CommentDtoIEnumerablePagedItems"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateCommentDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CommentDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/categories/{categoryId}/posts/{postId}/comments/{commentId}": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "operationId": "GetComment",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CommentDto"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Comments"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateCommentDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CommentDto"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comments"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/categories/{categoryId}/posts": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "PageNumber",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "PageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PostDtoIEnumerablePagedItems"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/CreatePostDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PostDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/categories/{categoryId}/posts/{postId}": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "operationId": "GetPost",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PostDto"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Posts"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePostDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PostDto"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CategoryDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "creationDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "CategoryDtoIEnumerablePagedItems": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CategoryDto"
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        }
+      }
+    },
+    "CommentDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "content": {
+          "type": "string"
+        },
+        "postId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "creationDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "CommentDtoIEnumerablePagedItems": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommentDto"
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        }
+      }
+    },
+    "CreateCategoryDto": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "CreateCommentDto": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "CreatePostDto": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginUser": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Metadata": {
+      "type": "object",
+      "properties": {
+        "totalCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "currentPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPages": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PostDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "categoryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "creationDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "PostDtoIEnumerablePagedItems": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PostDto"
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        }
+      }
+    },
+    "RegisterUser": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateCategoryDto": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateCommentDto": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdatePostDto": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\""
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
