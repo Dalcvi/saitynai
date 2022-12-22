@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DC\\source\\repos\\ForumApi\\ForumApi\\ForumApi.csproj": {}
+    "C:\\Users\\DC\\Desktop\\forum\\saitynai\\ForumApi\\ForumApi\\ForumApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DC\\source\\repos\\ForumApi\\ForumApi\\ForumApi.csproj": {
+    "C:\\Users\\DC\\Desktop\\forum\\saitynai\\ForumApi\\ForumApi\\ForumApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DC\\source\\repos\\ForumApi\\ForumApi\\ForumApi.csproj",
+        "projectUniqueName": "C:\\Users\\DC\\Desktop\\forum\\saitynai\\ForumApi\\ForumApi\\ForumApi.csproj",
         "projectName": "ForumApi",
-        "projectPath": "C:\\Users\\DC\\source\\repos\\ForumApi\\ForumApi\\ForumApi.csproj",
+        "projectPath": "C:\\Users\\DC\\Desktop\\forum\\saitynai\\ForumApi\\ForumApi\\ForumApi.csproj",
         "packagesPath": "C:\\Users\\DC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DC\\source\\repos\\ForumApi\\ForumApi\\obj\\",
+        "outputPath": "C:\\Users\\DC\\Desktop\\forum\\saitynai\\ForumApi\\ForumApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DC\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

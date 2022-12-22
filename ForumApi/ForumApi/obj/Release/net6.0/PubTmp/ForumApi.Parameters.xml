@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="IIS Web Application Name" description="" value="ForumGaming" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\DC\\source\\repos\\ForumApi\\ForumApi\\obj\\Release\\net6\.0\\PubTmp\\Out\\$" />
-  </parameter>
-  <parameter name="ForumApi.Data.Context.ForumDbContext" description="" value="Data Source=tcp:forumapidbserver.database.windows.net,1433;Initial Catalog=ForumApi_db;User Id=dalcvi@forumapidbserver;Password=Dangislopas123!" tags="dbfullsql">
-    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\DC\\source\\repos\\ForumApi\\ForumApi\\obj\\Release\\net6\.0\\PubTmp\\EFSQLScripts\\ForumApi\.Data\.Context\.ForumDbContext\.sql$" />
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\DC\\Desktop\\forum\\saitynai\\ForumApi\\ForumApi\\obj\\Release\\net6\.0\\PubTmp\\Out\\$" />
   </parameter>
 </parameters>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NH9w92jMD1dDdiXtmBLCJA7MlLygMTuwWGQuZZ6JKWaE203tX7zLoq/vejDtHmA0CzG5vytPsdhKOSEJeP9Puw==",
+  "dgSpecHash": "4llxLVqWBQZBsK0Hf2+zP56TTUmUhWtkkaP3fSXFzEo5iOqNwi5jgT4WxR7TwUL689xWT6QezwgjStmO/f6ksA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DC\\source\\repos\\ForumApi\\ForumApi\\ForumApi.csproj",
+  "projectFilePath": "C:\\Users\\DC\\Desktop\\forum\\saitynai\\ForumApi\\ForumApi\\ForumApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DC\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\DC\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",

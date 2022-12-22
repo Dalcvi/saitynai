@@ -16,7 +16,11 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 appBuilder.Services.AddControllers();
 
-appBuilder.Services.AddIdentity<ForumRestUser, IdentityRole>()
+appBuilder.Services.AddIdentity<ForumRestUser, IdentityRole>(
+    options =>
+    {
+        options.User.RequireUniqueEmail = true;
+    })
     .AddEntityFrameworkStores<ForumDbContext>()
     .AddDefaultTokenProviders();
 

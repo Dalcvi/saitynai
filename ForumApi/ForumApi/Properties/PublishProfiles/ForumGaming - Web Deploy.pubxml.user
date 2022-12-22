@@ -7,17 +7,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJt3awvtgDkyDRIZtluFhRwAAAAACAAAAAAAQZgAAAAEAACAAAABeGSDePew7BsrlaViZ06K7fwhjfZdbgQtxhQzj/JRcLwAAAAAOgAAAAAIAACAAAACvQ27fYL+DIlhIP2LEG+h925VAU0KCp2ALVe1xVemjE4AAAACvWBZyE/1q6i+3qOYXC3StTOWA9WtyyoSNl/sSbRYBjNtRPou11fwQp0lB9VP20Q3OGUC1zVD/JlKKaXb5+DhtFXshdtO1CUOxNXq1ju6KsGV7NIJRLkegjBeE7a9bXEi+F2/QvBa2GOjAdBQslxiOd2ZuOcBokOqL2TxiAJ44ekAAAAC9+e6JvL0tGFSw685V0aOwtN0uIekOfdyaCk8EfE0oQzX8uZWnR914yH4s+wvCHMrhSkcuehsUqalVLcEAoL7e</EncryptedPassword>
-    <History>True|2022-11-17T20:10:09.6641913Z;True|2022-11-17T22:03:59.8337864+02:00;True|2022-11-17T21:56:53.0519571+02:00;True|2022-11-17T21:48:38.7739324+02:00;False|2022-11-17T21:47:03.4317566+02:00;True|2022-11-17T21:42:23.6238841+02:00;False|2022-11-17T21:40:19.7470054+02:00;False|2022-11-17T21:38:09.7506531+02:00;False|2022-11-17T21:36:30.3356612+02:00;</History>
+    <History>True|2022-12-22T22:45:38.5397082Z;False|2022-12-23T00:43:21.1265484+02:00;False|2022-12-23T00:42:18.0097495+02:00;True|2022-11-17T22:10:09.6641913+02:00;True|2022-11-17T22:03:59.8337864+02:00;True|2022-11-17T21:56:53.0519571+02:00;True|2022-11-17T21:48:38.7739324+02:00;False|2022-11-17T21:47:03.4317566+02:00;True|2022-11-17T21:42:23.6238841+02:00;False|2022-11-17T21:40:19.7470054+02:00;False|2022-11-17T21:38:09.7506531+02:00;False|2022-11-17T21:36:30.3356612+02:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="ForumDb">
       <Value>Data Source=tcp:forumapidbserver.database.windows.net,1433%3bInitial Catalog=ForumApi_db%3bUser Id=dalcvi%40forumapidbserver%3bPassword=Dangislopas123!</Value>
     </DestinationConnectionStrings>
-  </ItemGroup>
-  <ItemGroup>
-    <EFMigrations Include="ForumApi.Data.Context.ForumDbContext">
-      <Value>Data Source=tcp:forumapidbserver.database.windows.net,1433%3bInitial Catalog=ForumApi_db%3bUser Id=dalcvi%40forumapidbserver%3bPassword=Dangislopas123!</Value>
-    </EFMigrations>
   </ItemGroup>
 </Project>

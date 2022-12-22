@@ -3,6 +3,7 @@ using ForumApi.Auth.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ForumApi.Controllers
 {
@@ -67,7 +68,25 @@ namespace ForumApi.Controllers
             var roles = await _userManager.GetRolesAsync(user);
             var accessToken = _jwtTokenService.CreateAccessToken(user.Email, user.Id, roles);
 
-            return Ok(new SuccessfulLoginDto(accessToken, new UserDto(user.UserName, user.Email, user.Id)));
+            return Ok(new SuccessfulLoginDto(accessToken, new UserDto(user.UserName, user.Email, user.Id), roles));
+        }
+
+        [Authorize(Roles = Roles.User)]
+        [HttpGet]
+        [Route("token-login")]
+        public async Task<IActionResult> TokenLogin()
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var userEmail = currentUser.FindFirst(ClaimTypes.Email).Value;
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            if (user == null)
+            {
+                return BadRequest("Bad token");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var accessToken = _jwtTokenService.CreateAccessToken(user.Email, user.Id, roles);
+            return Ok(new SuccessfulLoginDto(accessToken, new UserDto(user.UserName, user.Email, user.Id), roles));
         }
     }
 }
