@@ -65,3 +65,6 @@ baze - tam naudojama ORM sąsaja.
 
 Svetaines API pasiekiamas is:
 <a href="https://forumgaming.azurewebsites.net/index.html">SWAGGER</a>
+
+Svetaine:
+<a href="https://gamingforum.onrender.com/">Gaming forum</a>

@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/1f0b5981-ce4b-47a5-ae8b-80b4680456e9/AppServices/subscriptions/1f0b5981-ce4b-47a5-ae8b-80b4680456e9/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/ForumGamingSite",
+    "appService.deploySubpath": "."
+}
