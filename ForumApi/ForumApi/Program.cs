@@ -13,7 +13,14 @@ using System.Text;
 
 WebApplicationBuilder appBuilder = WebApplication.CreateBuilder(args);
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
+appBuilder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "SpecificOrigin",
+                      builder =>
+                      {
+                          builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+                      });
+});
 appBuilder.Services.AddControllers();
 
 appBuilder.Services.AddIdentity<ForumRestUser, IdentityRole>(
@@ -87,7 +94,7 @@ appBuilder.Services.AddSwaggerGen(swagger =>
 
 
 WebApplication app = appBuilder.Build();
-
+app.UseCors("SpecificOrigin");
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {

@@ -11,10 +11,10 @@ namespace ForumApi.Data.Entities
         public Post Post { get; set; }
         public string? UserId { get; set; }
         [ForeignKey("UserId")]
-        public ForumRestUser? User { get; set; }
+        public ForumRestUser User { get; set; }
         public override CommentDto MapToDto()
         {
-            return new CommentDto(Id, Content, PostId, CreatedDate, UserId);
+            return new CommentDto(Id, Content, PostId, CreatedDate, User.MapToDto());
         }
     }
 }

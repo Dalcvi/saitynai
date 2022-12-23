@@ -28,12 +28,12 @@ namespace ForumApi.Data.Repositories
 
         public async Task<Comment?> GetOneAsync(int categoryId, int postId, int commentId)
         {
-            return await forumDbContext.Comments.FirstOrDefaultAsync(comment => comment.Id == commentId && comment.Post.Id == postId && comment.Post.Category.Id == categoryId);
+            return await forumDbContext.Comments.Include(comment => comment.Post).ThenInclude(post => post.Category).Include(comment => comment.User).FirstOrDefaultAsync(comment => comment.Id == commentId && comment.Post.Id == postId && comment.Post.Category.Id == categoryId);
         }
 
         public async Task<PagedList<Comment>> GetManyAsync(int categoryId, int postId, SearchParameters searchParams)
         {
-            var queryable = forumDbContext.Comments.AsQueryable().Where(comment => comment.Post.Id == postId && comment.Post.Category.Id == categoryId)
+            var queryable = forumDbContext.Comments.AsQueryable().Include(comment => comment.User).Where(comment => comment.Post.Id == postId && comment.Post.Category.Id == categoryId)
                 .OrderBy(comment => comment.CreatedDate);
 
             return await PagedList<Comment>.CreateAsync(queryable, searchParams.PageNumber, searchParams.PageSize);
@@ -41,7 +41,7 @@ namespace ForumApi.Data.Repositories
 
         public async Task<PagedList<Comment>> GetManyAsync(int categoryId, SearchParameters searchParams)
         {
-            var queryable = forumDbContext.Comments.AsQueryable().Where(comment => comment.Post.Category.Id == categoryId)
+            var queryable = forumDbContext.Comments.AsQueryable().Include(comment => comment.User).Where(comment => comment.Post.Category.Id == categoryId)
                 .OrderBy(comment => comment.CreatedDate);
 
             return await PagedList<Comment>.CreateAsync(queryable, searchParams.PageNumber, searchParams.PageSize);

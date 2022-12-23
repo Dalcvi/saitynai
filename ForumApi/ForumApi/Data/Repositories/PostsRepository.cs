@@ -27,12 +27,12 @@ namespace ForumApi.Data.Repositories
 
         public async Task<Post?> GetOneAsync(int categoryId, int postId)
         {
-            return await forumDbContext.Posts.FirstOrDefaultAsync(post => post.Id.Equals(postId) && post.Category.Id.Equals(categoryId));
+            return await forumDbContext.Posts.Include(post => post.User).FirstOrDefaultAsync(post => post.Id.Equals(postId) && post.Category.Id.Equals(categoryId));
         }
 
         public async Task<PagedList<Post>> GetManyAsync(int categoryId, SearchParameters searchParams)
         {
-            var queryable = forumDbContext.Posts.AsQueryable().Where(post => post.Category.Id.Equals(categoryId)).OrderBy(category => category.CreatedDate);
+            var queryable = forumDbContext.Posts.AsQueryable().Include(post => post.User).Where(post => post.Category.Id.Equals(categoryId)).OrderBy(category => category.CreatedDate);
 
             return await PagedList<Post>.CreateAsync(queryable, searchParams.PageNumber, searchParams.PageSize);
         }

@@ -4,6 +4,7 @@ using ForumApi.Data.Dtos.General;
 using ForumApi.Data.Entities;
 using ForumApi.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System.Security.Claims;
@@ -17,14 +18,17 @@ namespace ForumApi.Controllers
         private readonly IPostsRepository postsRepository;
         private readonly ICommentsRepository commentsRepository;
         private readonly IAuthorizationService authorizationService;
+        private readonly UserManager<ForumRestUser> _userManager;
+
 
         private const string getCommentRoute = "GetComment";
 
-        public CommentsController(ICommentsRepository commentsRepository, IPostsRepository postsRepository, IAuthorizationService authorizationService)
+        public CommentsController(ICommentsRepository commentsRepository, IPostsRepository postsRepository, IAuthorizationService authorizationService, UserManager<ForumRestUser> userManager)
         {
             this.commentsRepository = commentsRepository;
             this.postsRepository = postsRepository;
             this.authorizationService = authorizationService;
+            _userManager = userManager;
         }
 
         // GET: /api/categories/{categoryId}/posts/{postId}/comments?pageNumber=1&pageSize=10
@@ -58,8 +62,9 @@ namespace ForumApi.Controllers
             if (post == null)
                 return NotFound();
 
+            var user = await _userManager.FindByIdAsync(User.FindFirstValue(JwtRegisteredClaimNames.Sub));
 
-            var comment = new Comment { Post = post, Content = createCommentDto.Content, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
+            var comment = new Comment { Post = post, Content = createCommentDto.Content, User = user };
 
             await commentsRepository.CreateAsync(comment);
             return CreatedAtRoute(getCommentRoute, new { categoryId = post.CategoryId, postId = post.Id, commentId = comment.Id }, comment.MapToDto());

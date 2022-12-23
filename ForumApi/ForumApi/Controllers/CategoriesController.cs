@@ -70,6 +70,7 @@ namespace ForumApi.Controllers
                 return NotFound();
 
             category.Description = updateCategoryDto.Description;
+            category.Title = updateCategoryDto.Title;
 
             await categoriesRepository.UpdateAsync(category);
 

@@ -12,11 +12,11 @@ namespace ForumApi.Data.Entities
         public Category Category { get; set; }
         public string? UserId { get; set; }
         [ForeignKey("UserId")]
-        public ForumRestUser? User { get; set; }
+        public ForumRestUser User { get; set; }
 
         public override PostDto MapToDto()
         {
-            return new PostDto(Id, Title, Content, CategoryId, CreatedDate, UserId);
+            return new PostDto(Id, Title, Content, CategoryId, CreatedDate, User.MapToDto());
         }
     }
 }

@@ -4,6 +4,7 @@ using ForumApi.Data.Dtos.Posts;
 using ForumApi.Data.Entities;
 using ForumApi.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System.Security.Claims;
@@ -17,13 +18,15 @@ namespace ForumApi.Controllers
         private readonly IPostsRepository postsRepository;
         private readonly ICategoriesRepository categoriesRepository;
         private readonly IAuthorizationService authorizationService;
+        private readonly UserManager<ForumRestUser> _userManager;
         private const string getPostRoute = "GetPost";
 
-        public PostsController(IPostsRepository postsRepository, ICategoriesRepository categoriesRepository, IAuthorizationService authorizationService)
+        public PostsController(IPostsRepository postsRepository, ICategoriesRepository categoriesRepository, IAuthorizationService authorizationService, UserManager<ForumRestUser> userManager)
         {
             this.postsRepository = postsRepository;
             this.categoriesRepository = categoriesRepository;
             this.authorizationService = authorizationService;
+            this._userManager = userManager;
         }
 
         // GET: /api/categories/{categoryId}/posts?pageNumber=1&pageSize=10
@@ -59,10 +62,11 @@ namespace ForumApi.Controllers
             if (category == null)
                 return NotFound();
 
-            var post = new Post { Category = category, Title = createPostDto.Title, Content = createPostDto.Content, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
+            var user = await _userManager.FindByIdAsync(User.FindFirstValue(JwtRegisteredClaimNames.Sub));
+
+            var post = new Post { Category = category, Title = createPostDto.Title, Content = createPostDto.Content, User = user };
 
             await postsRepository.CreateAsync(post);
-
             return CreatedAtRoute(getPostRoute, new { categoryId = category.Id, postId = post.Id }, post.MapToDto());
         }
 
